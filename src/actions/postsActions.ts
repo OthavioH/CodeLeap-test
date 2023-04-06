@@ -26,26 +26,11 @@ export function deletePostAction(
 
 export function addNewPostAction(
   state: PostsState,
-  action: PayloadAction<IPost | IPostCreate>
+  action: PayloadAction<IPost>
 ) {
-  const isProd = import.meta.env.PROD;
-  if (isProd && "id" in action.payload) {
-    state.value.push(action.payload);
+  state.value.push(action.payload);
 
-    state.value = sortByDate(state.value);
-  } else {
-    const newPost: IPost = {
-      id: state.value.length + 1,
-      title: action.payload.title,
-      content: action.payload.content,
-      created_datetime: new Date().toISOString(),
-      username: action.payload.username,
-    };
-
-    state.value.push(newPost);
-
-    state.value = sortByDate(state.value);
-  }
+  state.value = sortByDate(state.value);
 }
 
 export function editPostAction(

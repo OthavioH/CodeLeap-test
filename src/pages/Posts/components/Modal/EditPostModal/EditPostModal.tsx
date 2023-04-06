@@ -13,7 +13,6 @@ import FormInputLabel from "../../../../../components/form/FormInputLabel/FormIn
 import FormTextInput from "../../../../../components/form/FormTextInput/FormTextInput";
 import TextFieldInput from "../../../../../components/form/TextFieldInput/TextFieldInput";
 import PostService from "../../../../../shared/services/PostService";
-import PostServiceMock from "../../../../../shared/mocks/PostServiceMock";
 
 interface EditPostModalProps {
   post: IPost;
@@ -29,11 +28,7 @@ export function EditPostModal({
   const [title, setTitle] = useState(post.title);
   const [content, setContent] = useState(post.content);
 
-  const dispatch = useDispatch();
-  const isProd = import.meta.env.PROD;
-  const postService = isProd
-    ? new PostService(useDispatch())
-    : new PostServiceMock(useDispatch());
+  const postService = new PostService(useDispatch());
 
   async function handleSavePost() {
     const newPost = {

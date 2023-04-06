@@ -13,17 +13,13 @@ import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import PostService from "../../shared/services/PostService";
-import PostServiceMock from "../../shared/mocks/PostServiceMock";
 import { Waypoint } from "react-waypoint";
 
 export default function Posts() {
   const navigate = useNavigate();
 
   const posts = useSelector((state: RootState) => state.posts.value);
-  const isProd = import.meta.env.PROD;
-  const postService = isProd
-    ? new PostService(useDispatch())
-    : new PostServiceMock(useDispatch());
+  const postService = new PostService(useDispatch());
   const username = useSelector(
     (state: RootState) => state.signUpUsername.value
   );
@@ -57,7 +53,7 @@ export default function Posts() {
             {posts.map((post) => (
               <PostItem key={post.id} post={post} />
             ))}
-            {isProd && <Waypoint onEnter={getMorePosts} />}
+            <Waypoint onEnter={getMorePosts} />
           </PostList>
         </PostsSection>
       </PostsContainer>

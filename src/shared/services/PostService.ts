@@ -8,10 +8,12 @@ import {
   editPost,
   setPosts,
 } from "../../redux/posts/postsSlice";
+import INextParameters from "../types/NextParameters";
+import parseNextURL from "../utils/parseNextURL";
 
 export default class PostService {
   dispatch: Dispatch;
-  nextURL: string = "";
+  nextURLParameters: INextParameters = { limit: 10, offset: 0 };
 
   constructor(dispatchHook: Dispatch) {
     this.dispatch = dispatchHook;
@@ -19,15 +21,19 @@ export default class PostService {
 
   async getPosts(): Promise<void> {
     const response = (await api.get("/careers/")).data as GetPostResponse;
-    this.nextURL = response.next;
+    this.nextURLParameters = parseNextURL(response.next);
 
     this.dispatch(setPosts(response.results));
   }
 
   async getMorePosts(): Promise<void> {
-    const response = (await api.get(this.nextURL)).data as GetPostResponse;
+    const response = (
+      await api.get(
+        `/careers/?limit=${this.nextURLParameters.limit}&offset=${this.nextURLParameters.offset}`
+      )
+    ).data as GetPostResponse;
 
-    this.nextURL = response.next;
+    this.nextURLParameters = parseNextURL(response.next);
     this.dispatch(setPosts(response.results));
   }
 
