@@ -18,7 +18,7 @@ export default class PostService {
   }
 
   async getPosts(): Promise<void> {
-    const response = (await api.get("/careers")).data as GetPostResponse;
+    const response = (await api.get("/careers/")).data as GetPostResponse;
     this.nextURL = response.next;
 
     this.dispatch(setPosts(response.results));
@@ -33,7 +33,7 @@ export default class PostService {
 
   async createPost(post: IPostCreate): Promise<void> {
     try {
-      const response = await api.post("/careers", post);
+      const response = await api.post("/careers/", post);
       if (response.status === 201) {
         this.dispatch(addNewPost(response.data));
       } else {
@@ -46,7 +46,7 @@ export default class PostService {
 
   async editPost(post: IPost): Promise<void> {
     try {
-      const response = await api.patch(`/careers/${post.id}`, post);
+      const response = await api.patch(`/careers/${post.id}/`, post);
       if (response.status === 200) {
         this.dispatch(editPost(post));
       } else {
@@ -59,7 +59,7 @@ export default class PostService {
 
   async deletePost(id: number): Promise<void> {
     try {
-      const response = await api.delete(`/careers/${id}`);
+      const response = await api.delete(`/careers/${id}/`);
       if (response.status === 204) {
         this.dispatch(deletePost(id));
       } else {
