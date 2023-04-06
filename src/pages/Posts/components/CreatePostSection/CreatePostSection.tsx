@@ -38,6 +38,8 @@ export default function CreatePostSection() {
     };
 
     await postService.createPost(post);
+    setTitle("");
+    setContent("");
   }
 
   return (
@@ -67,7 +69,7 @@ export default function CreatePostSection() {
       </FormGroup>
       <FormSubmitButton
         text="Create"
-        disabled={false}
+        disabled={title.length === 0 || content.length === 0}
         onClick={(e) => {
           handleCreatePost(e);
         }}
