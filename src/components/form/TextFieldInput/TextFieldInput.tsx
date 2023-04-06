@@ -26,6 +26,9 @@ const Input = styled.textarea`
 
   border: 1px solid #777777;
   border-radius: 8px;
+  ::placeholder {
+    color: #cccccc;
+  }
 
   font-family: "Roboto";
 `;

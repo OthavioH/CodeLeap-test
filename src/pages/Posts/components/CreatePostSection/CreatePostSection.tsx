@@ -42,7 +42,7 @@ export default function CreatePostSection() {
 
   return (
     <CreatePostForm>
-      <FormTitle title="Create a new post" />
+      <FormTitle title="What's on your mind?" />
       <FormGroup>
         <FormInputLabel text="Title" />
         <FormTextInput

@@ -13,7 +13,7 @@ export const Modal = styled.div`
   align-items: center;
   padding: 1rem;
   border-radius: 6px;
-  background-color: rgba(0, 0, 0, 0.6);
+  background-color: rgba(119, 119, 119, 0.8);
   z-index: 9999;
 
   &.active {
@@ -67,6 +67,10 @@ export const ModalButton = styled.button`
   border-radius: 8px;
   font-weight: bold;
   cursor: pointer;
+
+  &:hover {
+    transform: scale(1.05);
+  }
 `;
 
 export const CancelButton = styled(ModalButton)`
