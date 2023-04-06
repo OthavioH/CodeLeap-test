@@ -9,9 +9,22 @@ import {
   PostsTitle,
 } from "./styles/posts.styles";
 import { RootState } from "../../redux";
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 export default function Posts() {
+  const navigate = useNavigate();
+
   const posts = useSelector((state: RootState) => state.posts.value);
+  const username = useSelector(
+    (state: RootState) => state.signUpUsername.value
+  );
+
+  useEffect(() => {
+    if (!username) {
+      navigate("/");
+    }
+  });
 
   return (
     <PostsMain>
@@ -20,16 +33,9 @@ export default function Posts() {
         <PostsSection>
           <CreatePostSection />
           <PostList>
-            <PostItem
-              post={{
-                id: 1,
-                title: "Post 1",
-                content:
-                  "Curabitur suscipit suscipit tellus. Phasellus consectetuer vestibulum elit. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Maecenas egestas arcu quis ligula mattis placerat. Duis vel nibh at velit scelerisque suscipit. Duis lobortis massa imperdiet quam. Aenean posuere, tortor sed cursus feugiat, nunc augue blandit nunc, eu sollicitudin urna dolor sagittis lacus. Fusce a quam. Nullam vel sem. Nullam cursus lacinia erat.",
-                username: "user1",
-                created_datetime: new Date(),
-              }}
-            />
+            {posts.map((post) => (
+              <PostItem key={post.id} post={post} />
+            ))}
           </PostList>
         </PostsSection>
       </PostsContainer>

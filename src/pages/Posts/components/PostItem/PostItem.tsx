@@ -1,4 +1,5 @@
 import IPost from "../../../../types/Post";
+import formatTimeAgo from "../../../../utils/formatTimeAgo";
 import {
   Post,
   PostHeader,
@@ -22,7 +23,7 @@ export default function PostItem({ post }: PostItemProps) {
       <PostBody>
         <PostInfo>
           <PostAuthor>@{post.username}</PostAuthor>
-          <p>25 minutes ago</p>
+          <p>{formatTimeAgo(new Date(post.created_datetime))}</p>
         </PostInfo>
         <PostText>{post.content}</PostText>
       </PostBody>

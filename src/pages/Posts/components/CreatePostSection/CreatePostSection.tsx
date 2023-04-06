@@ -17,13 +17,12 @@ export default function CreatePostSection() {
   const [content, setContent] = useState<string>("");
 
   const dispatch = useDispatch();
+  const username = useSelector(
+    (state: RootState) => state.signUpUsername.value
+  );
 
   function handleCreatePost(e: BaseSyntheticEvent) {
     e.preventDefault();
-
-    const username = useSelector(
-      (state: RootState) => state.signUpUsername.value
-    );
 
     const post: IPostCreate = {
       username: username,

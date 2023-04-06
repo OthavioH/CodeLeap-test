@@ -10,9 +10,7 @@ export const SubmitButton = styled.button`
   color: #fff;
   font-size: 16px;
   font-weight: bold;
-
-  content: "  ";
-  overflow: hidden;
+  cursor: pointer;
 
   :after {
     content: "  ";

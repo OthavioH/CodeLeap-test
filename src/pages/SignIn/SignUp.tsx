@@ -8,14 +8,17 @@ import FormTitle from "../../components/form/FormTitle/FormTitle";
 import { setGlobalUsername } from "../../redux/username/usernameSlice";
 import { SignUpContainer, SignUpMain } from "./styles/signUp.styles";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function SignUp() {
   const [username, setUsername] = useState<string>("");
+  const navigate = useNavigate();
 
   const dispatch = useDispatch();
 
   function handleSetUsername() {
     dispatch(setGlobalUsername(username));
+    navigate("/posts");
   }
 
   function handlerUsernameChange(e: React.ChangeEvent<HTMLInputElement>) {

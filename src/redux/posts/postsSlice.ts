@@ -1,13 +1,15 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { addNew, resetPosts, setPosts } from "../../actions/posts";
-import IPost from "../../types/Post";
+import IPost, { sortByDate } from "../../types/Post";
+
+import defaultPosts from "../../data/defaultPosts.json";
 
 export interface PostsState {
   value: IPost[];
 }
 
 const initialState: PostsState = {
-  value: [],
+  value: sortByDate(defaultPosts),
 };
 
 const postsSlice = createSlice({
