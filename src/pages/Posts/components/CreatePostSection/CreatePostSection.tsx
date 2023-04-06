@@ -12,19 +12,23 @@ import { RootState } from "../../../../redux";
 import { BaseSyntheticEvent, useState } from "react";
 import IPost, { IPostCreate } from "../../../../shared/types/Post";
 import PostService from "../../../../shared/services/PostService";
+import PostServiceMock from "../../../../shared/mocks/PostServiceMock";
 
 export default function CreatePostSection() {
   const [title, setTitle] = useState<string>("");
   const [content, setContent] = useState<string>("");
 
   const dispatch = useDispatch();
-  const postService = new PostService(dispatch);
+  const isProd = import.meta.env.PROD;
+  const postService = isProd
+    ? new PostService(useDispatch())
+    : new PostServiceMock(useDispatch());
 
   const username = useSelector(
     (state: RootState) => state.signUpUsername.value
   );
 
-  function handleCreatePost(e: BaseSyntheticEvent) {
+  async function handleCreatePost(e: BaseSyntheticEvent) {
     e.preventDefault();
 
     const post: IPostCreate = {
@@ -33,7 +37,7 @@ export default function CreatePostSection() {
       content,
     };
 
-    postService.createPost(post);
+    await postService.createPost(post);
   }
 
   return (

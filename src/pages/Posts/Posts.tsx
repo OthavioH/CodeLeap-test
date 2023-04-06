@@ -13,12 +13,16 @@ import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import PostService from "../../shared/services/PostService";
+import PostServiceMock from "../../shared/mocks/PostServiceMock";
 
 export default function Posts() {
   const navigate = useNavigate();
 
   const posts = useSelector((state: RootState) => state.posts.value);
-  const postService = new PostService(useDispatch());
+  const isProd = import.meta.env.PROD;
+  const postService = isProd
+    ? new PostService(useDispatch())
+    : new PostServiceMock(useDispatch());
   const username = useSelector(
     (state: RootState) => state.signUpUsername.value
   );
@@ -27,8 +31,12 @@ export default function Posts() {
     if (!username) {
       return navigate("/");
     }
-    postService.getPosts();
-  });
+    getPosts();
+  }, []);
+
+  async function getPosts() {
+    await postService.getPosts();
+  }
 
   return (
     <PostsMain>

@@ -13,6 +13,7 @@ import FormInputLabel from "../../../../../components/form/FormInputLabel/FormIn
 import FormTextInput from "../../../../../components/form/FormTextInput/FormTextInput";
 import TextFieldInput from "../../../../../components/form/TextFieldInput/TextFieldInput";
 import PostService from "../../../../../shared/services/PostService";
+import PostServiceMock from "../../../../../shared/mocks/PostServiceMock";
 
 interface EditPostModalProps {
   post: IPost;
@@ -29,18 +30,21 @@ export function EditPostModal({
   const [content, setContent] = useState(post.content);
 
   const dispatch = useDispatch();
-  const postService = new PostService(dispatch);
+  const isProd = import.meta.env.PROD;
+  const postService = isProd
+    ? new PostService(useDispatch())
+    : new PostServiceMock(useDispatch());
 
-  const handleSavePost = () => {
+  async function handleSavePost() {
     const newPost = {
       ...post,
       title: title,
       content: content,
     };
 
-    postService.editPost(newPost);
+    await postService.editPost(newPost);
     closeModal();
-  };
+  }
 
   return (
     <Modal className={isOpen ? "active" : "inactive"}>

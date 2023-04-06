@@ -1,4 +1,3 @@
-import { useDispatch } from "react-redux";
 import api from "../../lib/api";
 import GetPostResponse from "../types/GetPostResponse";
 import IPost, { IPostCreate } from "../types/Post";
@@ -16,11 +15,10 @@ export default class PostService {
     this.dispatch = dispatchHook;
   }
 
-  async getPosts(): Promise<IPost[]> {
+  async getPosts(): Promise<void> {
     const response = (await api.get("/careers")).data as GetPostResponse;
 
     this.dispatch(setPosts(response.results));
-    return response.results;
   }
 
   async createPost(post: IPostCreate): Promise<void> {
