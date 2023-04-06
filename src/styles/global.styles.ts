@@ -10,4 +10,13 @@ export const GlobalStyles = createGlobalStyle`
     html, body, #root {
         height: 100%;
     }
+
+    body {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background-color: #DDDDDD;
+        font-family:'Roboto';
+    }
 `;
