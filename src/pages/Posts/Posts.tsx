@@ -14,6 +14,7 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import PostService from "../../shared/services/PostService";
 import PostServiceMock from "../../shared/mocks/PostServiceMock";
+import { Waypoint } from "react-waypoint";
 
 export default function Posts() {
   const navigate = useNavigate();
@@ -39,6 +40,13 @@ export default function Posts() {
     await postService.getPosts();
   }
 
+  async function getMorePosts() {
+    if (posts.length > 0) {
+      const service = postService as PostService;
+      await service.getMorePosts();
+    }
+  }
+
   return (
     <PostsMain>
       <PostsContainer>
@@ -49,6 +57,7 @@ export default function Posts() {
             {posts.map((post) => (
               <PostItem key={post.id} post={post} />
             ))}
+            {isProd && <Waypoint onEnter={getMorePosts} />}
           </PostList>
         </PostsSection>
       </PostsContainer>

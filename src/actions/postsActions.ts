@@ -9,6 +9,13 @@ export function setPostsAction(
   state.value = sortByDate(action.payload);
 }
 
+export function addManyPostsAction(
+  state: PostsState,
+  action: PayloadAction<IPost[]>
+) {
+  state.value = sortByDate([...state.value, ...action.payload]);
+}
+
 export function deletePostAction(
   state: PostsState,
   action: PayloadAction<number>

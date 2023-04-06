@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {
+  addManyPostsAction,
   addNewPostAction,
   deletePostAction,
   editPostAction,
@@ -21,12 +22,13 @@ const postsSlice = createSlice({
   reducers: {
     setPosts: setPostsAction,
     deletePost: deletePostAction,
+    addManyPosts: addManyPostsAction,
     addNewPost: addNewPostAction,
     editPost: editPostAction,
   },
 });
 
-export const { setPosts, deletePost, addNewPost, editPost } =
+export const { setPosts, deletePost, addManyPosts, addNewPost, editPost } =
   postsSlice.actions;
 
 export default postsSlice.reducer;

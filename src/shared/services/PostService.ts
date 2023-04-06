@@ -11,13 +11,23 @@ import {
 
 export default class PostService {
   dispatch: Dispatch;
+  nextURL: string = "";
+
   constructor(dispatchHook: Dispatch) {
     this.dispatch = dispatchHook;
   }
 
   async getPosts(): Promise<void> {
     const response = (await api.get("/careers")).data as GetPostResponse;
+    this.nextURL = response.next;
 
+    this.dispatch(setPosts(response.results));
+  }
+
+  async getMorePosts(): Promise<void> {
+    const response = (await api.get(this.nextURL)).data as GetPostResponse;
+
+    this.nextURL = response.next;
     this.dispatch(setPosts(response.results));
   }
 
