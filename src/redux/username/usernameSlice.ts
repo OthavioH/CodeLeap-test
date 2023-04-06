@@ -1,5 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { resetUsernameAction, setUsernameAction } from "../../actions/username";
+import {
+  resetUsernameAction,
+  setUsernameAction,
+} from "../../actions/usernameActions";
 
 export interface UsernameState {
   value: string;

@@ -11,19 +11,23 @@ import {
 import { RootState } from "../../redux";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import PostService from "../../shared/services/PostService";
 
 export default function Posts() {
   const navigate = useNavigate();
 
   const posts = useSelector((state: RootState) => state.posts.value);
+  const postService = new PostService(useDispatch());
   const username = useSelector(
     (state: RootState) => state.signUpUsername.value
   );
 
   useEffect(() => {
     if (!username) {
-      navigate("/");
+      return navigate("/");
     }
+    postService.getPosts();
   });
 
   return (

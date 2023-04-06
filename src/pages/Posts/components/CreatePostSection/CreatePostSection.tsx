@@ -6,17 +6,20 @@ import FormTextInput from "../../../../components/form/FormTextInput/FormTextInp
 import FormTitle from "../../../../components/form/FormTitle/FormTitle";
 import TextFieldInput from "../../../../components/form/TextFieldInput/TextFieldInput";
 import { CreatePostForm } from "../../styles/posts.styles";
-import { addNewPost, setPostList } from "../../../../redux/posts/postsSlice";
+import { addNewPost } from "../../../../redux/posts/postsSlice";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../../redux";
 import { BaseSyntheticEvent, useState } from "react";
-import IPost, { IPostCreate } from "../../../../types/Post";
+import IPost, { IPostCreate } from "../../../../shared/types/Post";
+import PostService from "../../../../shared/services/PostService";
 
 export default function CreatePostSection() {
   const [title, setTitle] = useState<string>("");
   const [content, setContent] = useState<string>("");
 
   const dispatch = useDispatch();
+  const postService = new PostService(dispatch);
+
   const username = useSelector(
     (state: RootState) => state.signUpUsername.value
   );
@@ -30,7 +33,7 @@ export default function CreatePostSection() {
       content,
     };
 
-    dispatch(addNewPost(post));
+    postService.createPost(post);
   }
 
   return (

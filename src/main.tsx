@@ -4,7 +4,7 @@ import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
 
 import Router from "./routes/router";
-import { GlobalStyles } from "./styles/global.styles";
+import { GlobalStyles } from "./shared/styles/global.styles";
 import store from "./redux";
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(

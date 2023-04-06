@@ -15,9 +15,11 @@ export const Post = styled.div`
 
 export const PostHeader = styled.header`
   width: 100%;
-  height: 70px;
+  height: fit-content;
+  min-height: 70px;
   display: flex;
   flex-direction: row;
+  flex-wrap: nowrap;
   justify-content: space-between;
   align-items: flex-start;
   padding: 24px;
@@ -31,6 +33,9 @@ export const PostTitle = styled.p`
   font-size: 22px;
   font-weight: bold;
   color: #fff;
+  word-break: break-all;
+  text-overflow: ellipsis;
+  overflow: hidden;
 `;
 
 export const PostBody = styled.div`
@@ -60,6 +65,22 @@ export const PostAuthor = styled.p`
 `;
 
 export const PostText = styled.p`
-  width: 100%;
+  width: fit-content;
   padding-top: 16px;
+  word-break: break-all;
+`;
+
+export const Icon = styled.img`
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+`;
+
+export const IconRow = styled.div`
+  width: fit-content;
+  height: 30px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 22px;
 `;

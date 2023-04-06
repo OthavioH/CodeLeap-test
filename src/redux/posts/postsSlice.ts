@@ -1,27 +1,32 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { addNew, resetPosts, setPosts } from "../../actions/posts";
-import IPost, { sortByDate } from "../../types/Post";
-
-import defaultPosts from "../../data/defaultPosts.json";
+import {
+  addNewPostAction,
+  deletePostAction,
+  editPostAction,
+  setPostsAction,
+} from "../../actions/postsActions";
+import IPost, { sortByDate } from "../../shared/types/Post";
 
 export interface PostsState {
   value: IPost[];
 }
 
 const initialState: PostsState = {
-  value: sortByDate(defaultPosts),
+  value: [],
 };
 
 const postsSlice = createSlice({
   name: "posts",
   initialState,
   reducers: {
-    setPostList: setPosts,
-    addNewPost: addNew,
-    resetPostList: resetPosts,
+    setPosts: setPostsAction,
+    deletePost: deletePostAction,
+    addNewPost: addNewPostAction,
+    editPost: editPostAction,
   },
 });
 
-export const { setPostList, addNewPost, resetPostList } = postsSlice.actions;
+export const { setPosts, deletePost, addNewPost, editPost } =
+  postsSlice.actions;
 
 export default postsSlice.reducer;
