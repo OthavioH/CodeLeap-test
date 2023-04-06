@@ -28,6 +28,7 @@ export default function Posts() {
   );
 
   useEffect(() => {
+    document.title = "CodeLeap | Posts";
     if (!username) {
       return navigate("/");
     }

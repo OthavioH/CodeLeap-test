@@ -12,16 +12,8 @@ export const SubmitButton = styled.button`
   font-weight: bold;
   cursor: pointer;
 
-  :after {
-    content: "  ";
-    left: -100%;
-    clip-path: polygon(10% 0, 70% 0, 90% 100%, 30% 100%);
-    background-color: rgba(255, 255, 255, 0.6);
-    transition: all 300ms ease;
-  }
-
-  &:hover::after {
-    left: 100%;
+  &:hover {
+    transform: scale(1.05);
   }
 
   &:disabled {
