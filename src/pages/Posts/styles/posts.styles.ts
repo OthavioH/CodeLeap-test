@@ -19,6 +19,10 @@ export const PostsContainer = styled.div`
   align-items: center;
 
   background-color: #fff;
+
+  @media (max-width: 798px) {
+    width: 100%;
+  }
 `;
 
 export const PostsTitle = styled.p`

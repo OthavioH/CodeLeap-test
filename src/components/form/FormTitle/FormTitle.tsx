@@ -13,4 +13,8 @@ const Title = styled.p`
   font-size: 22px;
   color: #000;
   margin-bottom: 24px;
+
+  @media (max-width: 400px) {
+    font-size: 18px;
+  }
 `;

@@ -18,4 +18,8 @@ export const SignUpContainer = styled.div`
   background-color: #fff;
   border-radius: 16px;
   border: 1px #cccccc solid;
+
+  @media (max-width: 600px) {
+    width: 100%;
+  }
 `;
