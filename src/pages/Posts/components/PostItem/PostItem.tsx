@@ -1,5 +1,5 @@
 import IPost from "../../../../shared/types/Post";
-import formatTimeAgo from "../../../../shared/utils/formatTimeAgo";
+import formatRelativeTime from "../../../../shared/utils/formatRelativeTime";
 import {
   Post,
   PostHeader,
@@ -71,7 +71,7 @@ export default function PostItem({ post }: PostItemProps) {
         <PostBody>
           <PostInfo>
             <PostAuthor>@{post.username}</PostAuthor>
-            <p>{formatTimeAgo(new Date(post.created_datetime))}</p>
+            <p>{formatRelativeTime(new Date(post.created_datetime))}</p>
           </PostInfo>
           <PostText>{post.content}</PostText>
         </PostBody>
