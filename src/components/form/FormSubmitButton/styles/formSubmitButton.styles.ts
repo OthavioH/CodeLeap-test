@@ -33,7 +33,7 @@ export const SubmitButton = styled.button`
   transform: translate3d(0, 0, 0);
 
   &:disabled:hover {
-    animation: ${shake} 0.82s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+    animation: ${shake} 0.82s;
   }
 
   &:disabled {
