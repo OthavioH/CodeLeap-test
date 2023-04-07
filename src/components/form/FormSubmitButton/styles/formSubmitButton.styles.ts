@@ -30,8 +30,6 @@ export const SubmitButton = styled.button`
   font-weight: bold;
   cursor: pointer;
 
-  transform: translate3d(0, 0, 0);
-
   &:disabled:hover {
     animation: ${shake} 0.82s;
   }
