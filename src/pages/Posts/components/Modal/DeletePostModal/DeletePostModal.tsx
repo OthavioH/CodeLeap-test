@@ -9,6 +9,9 @@ import {
   ModalContent,
   ModalTitle,
 } from "../styles/Modal.styles";
+import PostService from "../../../../../shared/services/PostService";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../../../redux";
 
 interface DeletePostModalProps {
   postId: number;
@@ -23,10 +26,13 @@ export function DeletePostModal({
 }: DeletePostModalProps) {
   const dispatch = useDispatch();
 
-  const handleDeletePost = () => {
-    dispatch(deletePost(postId));
+  const nextURLParameter = useSelector((state: RootState) => state.nextURL);
+  const postService = new PostService(useDispatch(), nextURLParameter);
+
+  async function handleDeletePost() {
+    await postService.deletePost(postId);
     closeModal();
-  };
+  }
 
   return (
     <Modal className={isOpen ? "active" : "inactive"}>
