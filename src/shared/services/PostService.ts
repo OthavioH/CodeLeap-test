@@ -3,37 +3,56 @@ import GetPostResponse from "../types/GetPostResponse";
 import IPost, { IPostCreate } from "../types/Post";
 import { Dispatch } from "redux";
 import {
+  addManyPosts,
   addNewPost,
   deletePost,
   editPost,
   setPosts,
 } from "../../redux/posts/postsSlice";
+import INextParameters from "../types/NextParameters";
+import parseNextURL from "../utils/parseNextURL";
+import {
+  NextURLParametersState,
+  setNextURLParameters,
+} from "../../redux/nextURLParameter/nextURLParameter";
 
 export default class PostService {
   dispatch: Dispatch;
-  nextURL: string = "";
+  nextURLParameters: INextParameters;
 
-  constructor(dispatchHook: Dispatch) {
+  constructor(
+    dispatchHook: Dispatch,
+    nextURLParameters: NextURLParametersState
+  ) {
     this.dispatch = dispatchHook;
+    this.nextURLParameters = nextURLParameters;
   }
 
   async getPosts(): Promise<void> {
-    const response = (await api.get("/careers")).data as GetPostResponse;
-    this.nextURL = response.next;
+    const response = (await api.get("/careers/")).data as GetPostResponse;
+
+    this.dispatch(setNextURLParameters(parseNextURL(response.next)));
 
     this.dispatch(setPosts(response.results));
   }
 
   async getMorePosts(): Promise<void> {
-    const response = (await api.get(this.nextURL)).data as GetPostResponse;
+    const response = (
+      await api.get(`/careers/`, {
+        params: {
+          limit: this.nextURLParameters.limit,
+          offset: this.nextURLParameters.offset,
+        },
+      })
+    ).data as GetPostResponse;
 
-    this.nextURL = response.next;
-    this.dispatch(setPosts(response.results));
+    this.dispatch(setNextURLParameters(parseNextURL(response.next)));
+    this.dispatch(addManyPosts(response.results));
   }
 
   async createPost(post: IPostCreate): Promise<void> {
     try {
-      const response = await api.post("/careers", post);
+      const response = await api.post("/careers/", post);
       if (response.status === 201) {
         this.dispatch(addNewPost(response.data));
       } else {
@@ -46,7 +65,7 @@ export default class PostService {
 
   async editPost(post: IPost): Promise<void> {
     try {
-      const response = await api.patch(`/careers/${post.id}`, post);
+      const response = await api.patch(`/careers/${post.id}/`, post);
       if (response.status === 200) {
         this.dispatch(editPost(post));
       } else {
@@ -59,7 +78,7 @@ export default class PostService {
 
   async deletePost(id: number): Promise<void> {
     try {
-      const response = await api.delete(`/careers/${id}`);
+      const response = await api.delete(`/careers/${id}/`);
       if (response.status === 204) {
         this.dispatch(deletePost(id));
       } else {

@@ -13,7 +13,8 @@ import FormInputLabel from "../../../../../components/form/FormInputLabel/FormIn
 import FormTextInput from "../../../../../components/form/FormTextInput/FormTextInput";
 import TextFieldInput from "../../../../../components/form/TextFieldInput/TextFieldInput";
 import PostService from "../../../../../shared/services/PostService";
-import PostServiceMock from "../../../../../shared/mocks/PostServiceMock";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../../../redux";
 
 interface EditPostModalProps {
   post: IPost;
@@ -29,11 +30,9 @@ export function EditPostModal({
   const [title, setTitle] = useState(post.title);
   const [content, setContent] = useState(post.content);
 
-  const dispatch = useDispatch();
-  const isProd = import.meta.env.PROD;
-  const postService = isProd
-    ? new PostService(useDispatch())
-    : new PostServiceMock(useDispatch());
+  const nextURLParameter = useSelector((state: RootState) => state.nextURL);
+
+  const postService = new PostService(useDispatch(), nextURLParameter);
 
   async function handleSavePost() {
     const newPost = {
