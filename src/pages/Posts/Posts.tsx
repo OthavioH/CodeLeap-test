@@ -19,7 +19,9 @@ export default function Posts() {
   const navigate = useNavigate();
 
   const posts = useSelector((state: RootState) => state.posts.value);
-  const postService = new PostService(useDispatch());
+  const nextURLParameter = useSelector((state: RootState) => state.nextURL);
+
+  const postService = new PostService(useDispatch(), nextURLParameter);
   const username = useSelector(
     (state: RootState) => state.signUpUsername.value
   );
@@ -38,8 +40,7 @@ export default function Posts() {
 
   async function getMorePosts() {
     if (posts.length > 0) {
-      const service = postService as PostService;
-      await service.getMorePosts();
+      await postService.getMorePosts();
     }
   }
 
@@ -53,7 +54,7 @@ export default function Posts() {
             {posts.map((post) => (
               <PostItem key={post.id} post={post} />
             ))}
-            <Waypoint onEnter={getMorePosts} />
+            {posts.length > 0 && <Waypoint onEnter={getMorePosts} />}
           </PostList>
         </PostsSection>
       </PostsContainer>

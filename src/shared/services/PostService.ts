@@ -3,6 +3,7 @@ import GetPostResponse from "../types/GetPostResponse";
 import IPost, { IPostCreate } from "../types/Post";
 import { Dispatch } from "redux";
 import {
+  addManyPosts,
   addNewPost,
   deletePost,
   editPost,
@@ -10,31 +11,43 @@ import {
 } from "../../redux/posts/postsSlice";
 import INextParameters from "../types/NextParameters";
 import parseNextURL from "../utils/parseNextURL";
+import {
+  NextURLParametersState,
+  setNextURLParameters,
+} from "../../redux/nextURLParameter/nextURLParameter";
 
 export default class PostService {
   dispatch: Dispatch;
-  nextURLParameters: INextParameters = { limit: 10, offset: 0 };
+  nextURLParameters: INextParameters;
 
-  constructor(dispatchHook: Dispatch) {
+  constructor(
+    dispatchHook: Dispatch,
+    nextURLParameters: NextURLParametersState
+  ) {
     this.dispatch = dispatchHook;
+    this.nextURLParameters = nextURLParameters;
   }
 
   async getPosts(): Promise<void> {
     const response = (await api.get("/careers/")).data as GetPostResponse;
-    this.nextURLParameters = parseNextURL(response.next);
+
+    this.dispatch(setNextURLParameters(parseNextURL(response.next)));
 
     this.dispatch(setPosts(response.results));
   }
 
   async getMorePosts(): Promise<void> {
     const response = (
-      await api.get(
-        `/careers/?limit=${this.nextURLParameters.limit}&offset=${this.nextURLParameters.offset}`
-      )
+      await api.get(`/careers/`, {
+        params: {
+          limit: this.nextURLParameters.limit,
+          offset: this.nextURLParameters.offset,
+        },
+      })
     ).data as GetPostResponse;
 
-    this.nextURLParameters = parseNextURL(response.next);
-    this.dispatch(setPosts(response.results));
+    this.dispatch(setNextURLParameters(parseNextURL(response.next)));
+    this.dispatch(addManyPosts(response.results));
   }
 
   async createPost(post: IPostCreate): Promise<void> {
