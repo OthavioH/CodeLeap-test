@@ -52,7 +52,11 @@ export default function Posts() {
           <CreatePostSection />
           <PostList>
             {posts.map((post) => (
-              <PostItem key={post.id} post={post} />
+              <PostItem
+                key={post.id}
+                post={post}
+                isEditable={post.username == username}
+              />
             ))}
             {posts.length > 0 && <Waypoint onEnter={getMorePosts} />}
           </PostList>

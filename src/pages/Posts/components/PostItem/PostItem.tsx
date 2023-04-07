@@ -19,9 +19,10 @@ import { EditPostModal } from "../Modal/EditPostModal/EditPostModal";
 
 interface PostItemProps {
   post: IPost;
+  isEditable: boolean;
 }
 
-export default function PostItem({ post }: PostItemProps) {
+export default function PostItem({ post, isEditable }: PostItemProps) {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
@@ -53,20 +54,22 @@ export default function PostItem({ post }: PostItemProps) {
       <Post>
         <PostHeader>
           <PostTitle>{post.title}</PostTitle>
-          <IconRow>
-            <Icon
-              src={deletePostIcon}
-              onClick={() => {
-                setIsDeleteModalOpen(true);
-              }}
-            />
-            <Icon
-              src={editPostIcon}
-              onClick={() => {
-                setIsEditModalOpen(true);
-              }}
-            />
-          </IconRow>
+          {isEditable && (
+            <IconRow>
+              <Icon
+                src={deletePostIcon}
+                onClick={() => {
+                  setIsDeleteModalOpen(true);
+                }}
+              />
+              <Icon
+                src={editPostIcon}
+                onClick={() => {
+                  setIsEditModalOpen(true);
+                }}
+              />
+            </IconRow>
+          )}
         </PostHeader>
         <PostBody>
           <PostInfo>
