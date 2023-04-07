@@ -17,7 +17,9 @@ export default function CreatePostSection() {
   const [title, setTitle] = useState<string>("");
   const [content, setContent] = useState<string>("");
 
-  const postService = new PostService(useDispatch());
+  const nextURLParameter = useSelector((state: RootState) => state.nextURL);
+
+  const postService = new PostService(useDispatch(), nextURLParameter);
 
   const username = useSelector(
     (state: RootState) => state.signUpUsername.value
