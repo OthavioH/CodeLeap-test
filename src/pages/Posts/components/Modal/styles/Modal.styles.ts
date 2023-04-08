@@ -39,6 +39,10 @@ export const ModalContent = styled.div`
   background-color: #fff;
   border: 1px solid #999999;
   border-radius: 16px;
+
+  @media (max-width: 768px) {
+    width: 100%;
+  }
 `;
 
 export const ModalTitle = styled.p`
